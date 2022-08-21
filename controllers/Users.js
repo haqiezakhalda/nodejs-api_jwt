@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export const getUsers = async(req, res) => {
   try {
     const users = await Users.findAll({
-      attributes:['id','name','email','dateOfBirth','password','node','react','sql','nonSql']
+      attributes:['id','name','email','dateOfBirth','node','react','sql','nonSql']
     });
     console.log("getUsers:", users);
     res.json(users);
@@ -30,10 +30,23 @@ export const updateUsers = async (req, res) => {
         id: id
       }
     });
-    console.log("Sampai sini loh");
     res.json({msg: 'Data Berhasil Terupdate'});
   } catch (error) {
-    console.log("Ini error Update", error);
+    console.log(error);
+  }
+}
+
+export const deleteUsers = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Users.destroy({
+      where: {
+        id: id
+      }
+    });
+    res.json({msg: 'Data Berhasil Terhapus'});
+  } catch (error) {
+    console.log(error);
   }
 }
 
